@@ -18,8 +18,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun menuButtons() {
+
+        binding.buttonMenu.setOnClickListener {
+            Toast.makeText(this, "Меню", Toast.LENGTH_SHORT).show()
+        }
+        binding.buttonSearch.setOnClickListener {
+            Toast.makeText(this, "Найти фильм", Toast.LENGTH_SHORT).show()
+        }
         binding.buttonSettings.setOnClickListener {
             Toast.makeText(this, "Меню", Toast.LENGTH_SHORT).show()
         }
+        binding.buttonExit.setOnClickListener {
+            Toast.makeText(this, "Выход", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }

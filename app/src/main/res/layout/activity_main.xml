@@ -71,7 +71,7 @@
         tools:ignore="MissingConstraints">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
@@ -79,7 +79,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
@@ -95,7 +95,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
