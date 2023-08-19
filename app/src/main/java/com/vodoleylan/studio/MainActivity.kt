@@ -1,8 +1,9 @@
 package com.vodoleylan.studio
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.vodoleylan.studio.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Найти фильм", Toast.LENGTH_SHORT).show()
         }
         binding.buttonSettings.setOnClickListener {
-            Toast.makeText(this, "Меню", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Настройки", Toast.LENGTH_SHORT).show()
         }
         binding.buttonExit.setOnClickListener {
             Toast.makeText(this, "Выход", Toast.LENGTH_SHORT).show()
