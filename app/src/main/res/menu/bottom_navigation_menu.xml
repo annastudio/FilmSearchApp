@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/favorites"
-        android:icon="@drawable/ic_round_menu"
-        android:title="@string/item"
+        android:icon="@drawable/ic_baseline_access_time_filled"
+        android:title="@string/bottom_film_after"
         app:showAsAction="withText"/>
     <item
         android:id="@+id/watch_later"
-        android:icon="@drawable/ic_round_menu"
-        android:title="@string/item1"
+        android:icon="@drawable/ic_baseline_favorite"
+        android:title="@string/bottom_favorite"
         app:showAsAction="withText"/>
     <item
         android:id="@+id/selections"
-        android:icon="@drawable/ic_round_menu"
-        android:title="@string/item2"
+        android:icon="@drawable/ic_baseline_smart_display"
+        android:title="@string/bottom_list"
         app:showAsAction="withText"/>
 </menu>
