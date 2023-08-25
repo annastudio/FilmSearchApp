@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="item">ФИЛЬМЫ</string>
-    <string name="item1">ИЗБРАННОЕ</string>
-    <string name="item2">ПОИСК</string>
-    <string name="item3">НАСТРОЙКИ</string>
+    <string name="app_name">FilmSearchApp</string>
+    <string name="bottom_film_after">СМОТРЕТЬ ПОЗЖЕ</string>
+    <string name="bottom_favorite">ИЗБРАННОЕ</string>
+    <string name="bottom_list">ПОДБОРКИ</string>
     <string name="item4">ВЫХОД</string>
     <string name="disclaimer">Постеры предоставлены https://www.movieposters.com</string>
     <string name="menu_settings_title">Search it...</string>
