@@ -1,16 +1,19 @@
 package com.vodoleylan.studio
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vodoleylan.studio.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var filmsAdapter: FilmListRecyclerAdapter
     val filmsDataBase = listOf(
         Film(
-            "Ведьмак",
+            "The Shawshank Redemption",
             R.drawable.shawshank,
-            "Геральд из Ривии, один из последних ведьмаков. Он охотится на чудовищ, а его неимоверные способности помогают ему в этом."
+            "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
         ),
         Film(
             "The Godfather",
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             R.drawable.hamilton,
             "The real life of one of America's foremost founding fathers and first Secretary of the Treasury, Alexander Hamilton. Captured live on Broadway from the Richard Rodgers Theater with the original Broadway cast."
         ),
-         Film(
+        Film(
             "Interstellar",
             R.drawable.interstellar,
             "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
@@ -58,8 +61,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initNavigation()
+        initRecycleView()
+
     }
 
+
+    private fun initRecycleView() {
+        //находим наш RV
+        binding.mainRecycler.apply {
+            //Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс
+            filmsAdapter =
+                FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
+                    override fun click(film: Film) {
+                        //Запускаем наше активити
+                        val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                        startActivity(intent)
+                    }
+                })
+            //Присваиваем адаптер
+            adapter = filmsAdapter
+            //Присвои layoutmanager
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            //Применяем декоратор для отступов
+            val decorator = TopSpacingItemDecoration(8)
+            addItemDecoration(decorator)
+        }
+        //Кладем нашу БД в RV
+        filmsAdapter.addItems(filmsDataBase)
+    }
 
     private fun initNavigation() {
         binding.topAppBar.setOnMenuItemClickListener {
