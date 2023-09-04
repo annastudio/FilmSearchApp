@@ -9,6 +9,8 @@ import com.vodoleylan.studio.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private lateinit var binding: ActivityMainBinding
+
     val filmsDataBase = listOf(
         Film(
             "The Shawshank Redemption",
@@ -52,11 +54,9 @@ class MainActivity : AppCompatActivity() {
         ),
     )
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun initRecycleView() {
         //находим наш RV
         binding.mainRecycler.apply {
@@ -73,8 +72,16 @@ class MainActivity : AppCompatActivity() {
             filmsAdapter =
                 FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
                     override fun click(film: Film) {
+                        //Создаем бандл и кладем туда объект с данными фильма
+                        val bundle = Bundle()
+                        //Первым параметром указывается ключ, по которому потом будем искать, вторым сам
+                        //передаваемый объект
+                        bundle.putParcelable("film", film)
                         //Запускаем наше активити
                         val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                        //Прикрепляем бандл к интенту
+                        intent.putExtras(bundle)
+                        //Запускаем активити через интент
                         startActivity(intent)
                     }
                 })

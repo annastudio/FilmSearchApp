@@ -26,8 +26,7 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) :
         //Проверяем, какой у нас ViewHolder
         when (holder) {
             is FilmViewHolder -> {
-                //Вызываем метод bind(), который мы создали, и передаем туда объект
-                //из нашей базы данных с указанием позиции
+                //Вызываем метод bind() и передаем туда объект из "БД" с указанием позиции
                 holder.bind(items[position])
                 //Обрабатываем нажатие на весь элемент целиком(можно сделать на отдельный элемент
                 //например, картинку) и вызываем метод нашего листенера, который мы получаем из
@@ -38,7 +37,6 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) :
             }
         }
     }
-
 
     //Метод для добавления объектов в наш список
     fun addItems(list: List<Film>) {
