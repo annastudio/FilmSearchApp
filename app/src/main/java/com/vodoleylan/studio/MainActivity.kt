@@ -1,7 +1,6 @@
 package com.vodoleylan.studio
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.vodoleylan.studio.databinding.ActivityMainBinding
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.fragment_placeholder, HomeFragment())
             .addToBackStack(null)
             .commit()
-        Log.d("MyLogs", "message1")
 
     }
 
@@ -43,7 +41,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_placeholder, fragment)
             .addToBackStack(null)
             .commit()
-        Log.d("MyLogs", "message2")
     }
 
     private fun initNavigation() {
