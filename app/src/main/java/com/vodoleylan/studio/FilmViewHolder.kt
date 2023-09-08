@@ -1,6 +1,5 @@
 package com.vodoleylan.studio
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.vodoleylan.studio.databinding.FilmsItemForRvBinding
 
