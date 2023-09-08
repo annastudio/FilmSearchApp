@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vodoleylan.studio.databinding.FragmentHomeBinding
 import java.util.Locale
 
@@ -73,8 +74,8 @@ class HomeFragment : Fragment() {
         }
 
         initRecycleView()
+        visibilitySearchView()
         searchFilms()
-
 
     }
 
@@ -124,6 +125,29 @@ class HomeFragment : Fragment() {
                 //Добавляем в адаптер
                 filmsAdapter.addItems(result)
                 return true
+            }
+        })
+    }
+
+    private fun visibilitySearchView() {
+        binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    // Прокрутка вниз
+                    if (binding.searchView.visibility == View.VISIBLE) {
+                        // Скрываем поле поиска
+                        binding.searchView.animate().alpha(0f).withEndAction {
+                            binding.searchView.visibility = View.GONE
+                        }
+                    }
+                } else if (dy < 0) {
+                    // Прокрутка вверх
+                    if (binding.searchView.visibility != View.VISIBLE) {
+                        // Показываем поле поиска
+                        binding.searchView.visibility = View.VISIBLE
+                        binding.searchView.animate().alpha(1f)
+                    }
+                }
             }
         })
     }
