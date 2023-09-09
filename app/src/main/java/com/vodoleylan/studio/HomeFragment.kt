@@ -1,6 +1,11 @@
 package com.vodoleylan.studio
 
 import android.os.Bundle
+import android.transition.Scene
+import android.transition.Slide
+import android.transition.TransitionManager
+import android.transition.TransitionSet
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vodoleylan.studio.databinding.FragmentHomeBinding
+import com.vodoleylan.studio.databinding.MergeHomeScreenContentBinding
 import java.util.Locale
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var mergeBinding: MergeHomeScreenContentBinding
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     val filmsDataBase = listOf(
         Film(
@@ -61,49 +68,45 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        return binding.root
-
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val rootView = binding.root
+        mergeBinding =
+            MergeHomeScreenContentBinding.bind(rootView.findViewById(R.id.home_fragment_root))
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecycleView()
+        animateHomeScreen()
 
-        binding.searchView.setOnClickListener {
-            binding.searchView.isIconified = false
+        mergeBinding.searchView.setOnClickListener {
+            mergeBinding.searchView.isIconified = false
         }
 
-        initRecycleView()
-        visibilitySearchView()
         searchFilms()
-
     }
 
     private fun initRecycleView() {
-        //находим наш RV
-        binding.mainRecycler.apply {
+        mergeBinding.mainRecycler.apply {
             filmsAdapter =
                 FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
                     override fun click(film: Film) {
                         (requireActivity() as MainActivity).launchDetailsFragment(film)
                     }
                 })
-
-            //Присваиваем адаптер
             adapter = filmsAdapter
-            //Присвои layoutmanager
             layoutManager = LinearLayoutManager(requireContext())
-            //Применяем декоратор для отступов
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
         }
-        //Кладем нашу БД в RV
         filmsAdapter.addItems(filmsDataBase)
     }
 
     private fun searchFilms() {
         //Подключаем слушателя изменений введенного текста в поиска
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        mergeBinding.searchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
             //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
@@ -129,23 +132,43 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun animateHomeScreen() {
+        val scene = Scene.getSceneForLayout(
+            mergeBinding.root,
+            R.layout.merge_home_screen_content,
+            requireContext()
+        )
+
+        val searchSlide = Slide(Gravity.TOP).addTarget(mergeBinding.searchView)
+        val recyclerSlide = Slide(Gravity.BOTTOM).addTarget(mergeBinding.mainRecycler)
+
+        val customTransition = TransitionSet().apply {
+            duration = 500
+            addTransition(recyclerSlide)
+            addTransition(searchSlide)
+        }
+
+        TransitionManager.go(scene, customTransition)
+    }
+
     private fun visibilitySearchView() {
-        binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        mergeBinding.mainRecycler.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
                     // Прокрутка вниз
-                    if (binding.searchView.visibility == View.VISIBLE) {
+                    if (mergeBinding.searchView.visibility == View.VISIBLE) {
                         // Скрываем поле поиска
-                        binding.searchView.animate().alpha(0f).withEndAction {
-                            binding.searchView.visibility = View.GONE
+                        mergeBinding.searchView.animate().alpha(0f).withEndAction {
+                            mergeBinding.searchView.visibility = View.GONE
                         }
                     }
                 } else if (dy < 0) {
                     // Прокрутка вверх
-                    if (binding.searchView.visibility != View.VISIBLE) {
+                    if (mergeBinding.searchView.visibility != View.VISIBLE) {
                         // Показываем поле поиска
-                        binding.searchView.visibility = View.VISIBLE
-                        binding.searchView.animate().alpha(1f)
+                        mergeBinding.searchView.visibility = View.VISIBLE
+                        mergeBinding.searchView.animate().alpha(1f)
                     }
                 }
             }
